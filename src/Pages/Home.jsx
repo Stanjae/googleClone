@@ -55,13 +55,14 @@ const Home = () => {
     <Box
       sx={{
         height: "100dvh",
-        position: "relative"
+        position: "relative",
+        overflow:'hidden'
       }}
     >
      <IconButton sx={{ ml: 1 }} onClick={toggleColorMode} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
       </IconButton>
-      <Container sx={{height:'80%'}} maxWidth="sm">
+      <Container sx={{height:{sm:'80%', xs:'auto'}}} maxWidth="sm">
         <Box >
           <Stack
             direction={"row"}
@@ -73,7 +74,7 @@ const Home = () => {
             <img src={Logo} alt="logo" width={"100px"} height={"100px"} />
             <Typography
               variant="h1"
-              sx={{ fontWeight: "bold", fontSize: "6rem" }}
+              sx={{ fontWeight: "bold", fontSize: {md:"6rem", xs:'4rem'} }}
             >
               Gogle
             </Typography>
