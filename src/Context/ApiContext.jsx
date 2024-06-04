@@ -20,7 +20,8 @@ export const ApiContext = ({children}) => {
           return
         }
         try{
-          const response = await axios.get(`http://localhost:3000/api/search?q=${apiParam}`);
+          //const response = await axios.get(`http://localhost:3000/api/search?q=${apiParam}`);
+          const response = await axios.get(`https://miniature-erinn-stanity-tech-cd901ded.koyeb.app/api/search?q=${apiParam}`)
           setData(response.data);
           return response.data;
         }catch(error){

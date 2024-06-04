@@ -38,8 +38,10 @@ const Home = () => {
       return
     }
     try{
-      const response = await axios.get(`http://localhost:3000/api/search?q=${query}`);
+      //const response = await axios.get(`http://localhost:3000/api/search?q=${query}`);
+      const response = await axios.get(`https://miniature-erinn-stanity-tech-cd901ded.koyeb.app/api/search?q=${query}`);
       if(response.status!==200){
+        alert('An error may occur');
         console.log('An error may occur');
         return
       }
