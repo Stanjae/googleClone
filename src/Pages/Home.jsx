@@ -62,7 +62,7 @@ const Home = () => {
      <IconButton sx={{ ml: 1 }} onClick={toggleColorMode} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
       </IconButton>
-      <Container sx={{height:{sm:'80%', xs:'auto'}}} maxWidth="sm">
+      <Container sx={{height:{xs:'80%'}}} maxWidth="sm">
         <Box >
           <Stack
             direction={"row"}

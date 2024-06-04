@@ -20,7 +20,7 @@ const HFooter = () => {
     <Paper sx={{py:1, bgcolor:'background.extra', borderRadius:0}}>
         <Typography gutterBottom px={4} variant={'body1'}  component={'div'}>Nigeria</Typography>
         <Divider/>
-        <Stack px={3} direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
+        <Stack px={3} direction={{sm:'row', xs:'column'}} alignItems={'center'} justifyContent={{sm:'space-between', xs:'flex-start'}}>
             <FootLinks arry={nav1}/>
             <Typography variant='body1' sx={{display:'flex', alignItems:'center', gap:0.5}}><EnergySavingsLeaf sx={{color:green[600]}} fontSize='10px'/>Our third decade of Climate action: join Us</Typography>
             <FootLinks arry={nav2}/>
