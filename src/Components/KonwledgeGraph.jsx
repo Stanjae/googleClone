@@ -67,7 +67,7 @@ export default function KnowledgeGraph({content, sportResult}) {
             </Tabs>
         </Stack>
         <CustomTabPanel value={value} index={0}>
-            <Stack direction={'row'} gap={2} alignItems={'center'}>
+            <Stack sx={{overflowX:'scroll'}} direction={'row'} gap={2} alignItems={'center'}>
                 <ImageList sx={{ width:'540px', height: 320, borderRadius:'1rem', overflowY:'hidden' }} cols={4} rowHeight={159}>
                     {content?.header_images?.map((item, index) => (
                         <ImageListItem key={index} cols={itemData[index].cols || 1} rows={itemData[index].rows || 1}>

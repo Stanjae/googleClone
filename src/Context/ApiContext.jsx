@@ -12,11 +12,10 @@ export const ApiContext = ({children}) => {
 
     const [data, setData] = useState([]);
 
-    const {data:searchResults, isFetching} = useQuery({
+    const {data:searchResults, isFetching, isLoading, isError} = useQuery({
       queryKey:['googleResults', apiParam],
       queryFn:async()=>{
         if(apiParam ===''){
-          console.log('Please enter something');
           return
         }
         try{
@@ -30,13 +29,9 @@ export const ApiContext = ({children}) => {
       },
       enabled: apiParam !== '' ? true : false
     });
-    
-    console.log('search results', searchResults)
-
-    //const isData = data || searchResults;
 
   return (
-    <HapiCreateContext.Provider value={{setApiParam, data, searchResults , setData, isFetching}}>
+    <HapiCreateContext.Provider value={{setApiParam, data, searchResults , setData, isFetching, isLoading, isError}}>
       {children}
     </HapiCreateContext.Provider>
   )

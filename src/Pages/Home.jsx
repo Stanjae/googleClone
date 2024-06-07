@@ -2,12 +2,14 @@ import { Box, Button, Container, Divider, IconButton, InputBase, Paper, Stack, T
 import Logo from '../assets/ward.png'
 import { Brightness4, Brightness7, CameraEnhance, MicRounded, Search } from "@mui/icons-material"
 import { useTheme } from "@emotion/react"
-import { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { ColorModeContext } from "../App"
 import { Link, Form, useNavigate } from "react-router-dom"
 import HFooter from "../Components/HFooter"
 import axios from "axios";
 import { HapiCreateContext } from "../Context/ApiContext"
+import CircularProgress from '@mui/material/CircularProgress';
+import CustomAlerts from "../Components/CustomAlerts"
 
 
 const CusPaper = styled(Paper)(({theme})=>({
@@ -29,26 +31,48 @@ const Home = () => {
   const navigate = useNavigate()
 
   const {setData} = useContext(HapiCreateContext)
+  const [loading, setLoading] = useState(false)
+
+  const [message, setMessage] = useState({type:'', text:''})
+
+
+  const [messageStatus, setMessageStatus] = useState(false);
+
+  const handleClick = () => {
+    setMessageStatus(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setMessageStatus(false);
+  };
 
   const handleSubmit=async(e)=>{
     e.preventDefault();
+    setLoading(true)
     const query  = e.target[1].value
     if(query ===''){
-      console.log('Please enter something');
+      setMessage({text:'Please enter something', type:'error'})
+      handleClick()
+      setLoading(false)
       return
     }
     try{
       //const response = await axios.get(`http://localhost:3000/api/search?q=${query}`);
       const response = await axios.get(`https://miniature-erinn-stanity-tech-cd901ded.koyeb.app/api/search?q=${query}`);
-      if(response.status!==200){
-        alert('An error may occur');
-        console.log('An error may occur');
-        return
-      }
+      /* if(response.status!==200){
+        console.log(response)
+      } */
       setData(response.data)
+      setLoading(false)
       navigate(`/search/q=${query}/s`)
     }catch(error){
-      console.log(error);
+      setMessage({text:error.response.data.error, type:'error'})
+      handleClick()
+      setLoading(false)
     }
   }
   return (
@@ -97,6 +121,7 @@ const Home = () => {
               name="q"
               inputProps={{ "aria-label": "search google" }}
             />
+           { loading && <GradientCircularProgress/>}
             <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
               <MicRounded/>
             </IconButton>
@@ -112,7 +137,7 @@ const Home = () => {
           </Form>
 
           <Stack direction={'row'} my={2} py={2} gap={'12px'} justifyContent={'center'}>
-            <Button size='small' variant="contained">Gogle Search</Button>
+            <Button onClick={handleSubmit} size='small' variant="contained">Gogle Search</Button>
             <Button size='small' variant="contained">I&apos;m Feeling Lucky</Button>
           </Stack>
           <Stack direction={'row'} justifyContent={'center'} gap={1} my={2}>
@@ -123,9 +148,27 @@ const Home = () => {
           </Stack>
         </Box>
       </Container>
+      <CustomAlerts open={messageStatus} handleClose={handleClose} message={message} />
       <HFooter/>
     </Box>
   );
 }
 
 export default Home
+
+
+function GradientCircularProgress() {
+  return (
+    <React.Fragment>
+      <svg width={0} height={0}>
+        <defs>
+          <linearGradient id="my_gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#e01cd5" />
+            <stop offset="100%" stopColor="#1CB5E0" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <CircularProgress sx={{ 'svg circle': { stroke: 'url(#my_gradient)' } }} />
+    </React.Fragment>
+  );
+}

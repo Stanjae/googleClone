@@ -41,7 +41,7 @@ const SearchNav = ({fixedquery}) => {
     const {pathname} = useLocation();
     
     const navigate = useNavigate();
-    console.log(pathname)
+    //console.log(pathname)
 
     const handleSubmit=(e)=>{
         e.preventDefault();
